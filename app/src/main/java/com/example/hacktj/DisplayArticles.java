@@ -88,20 +88,13 @@ public class DisplayArticles extends AppCompatActivity implements View.OnClickLi
         try {
             jsonObject = getRequest(command.toString());
             ArrayList<String> articleTitles = new ArrayList<>();
+            ArrayList<Double> articleScores = new ArrayList<>();
             JSONArray ar = jsonObject.getJSONArray("articles");
             for (int i = 0; i < Math.min(5, ar.length()); i++){
                 JSONObject article = ar.getJSONObject(i);
                 articleTitles.add(article.getString("title"));
-                if (articleTitles.get(i).length() > 70){
-                    String a = articleTitles.get(i);
-                    a = a.substring(0,68);
-                    a += "...";
-                    articleTitles.set(i, a);
-                }
             }
             Log.d("ArticleTitles", articleTitles.toString());
-            ArticleViewAdapter adapter = new ArticleViewAdapter(getApplicationContext(), articleTitles);
-            articleList.setAdapter(adapter);
 
             int negative = 0, positive = 0;
             for (int i = 0; i < articleTitles.size(); i++){
@@ -115,8 +108,22 @@ public class DisplayArticles extends AppCompatActivity implements View.OnClickLi
                         positive++;
                     }
                 }
+                double score = (positive+0.0) / (positive + negative + 0.0);
+                if (positive == 0 && negative == 0) {
+                    score = 0.5;
+                }
+                articleScores.add(score);
             }
-            double score = (positive+1.0) / (positive + negative + 1.0);
+            for (int i = 0; i < Math.min(5, ar.length()); i++) {
+                if (articleTitles.get(i).length() > 70){
+                    String a = articleTitles.get(i);
+                    a = a.substring(0,68);
+                    a += "...";
+                    articleTitles.set(i, a);
+                }
+            }
+            ArticleViewAdapter adapter = new ArticleViewAdapter(getApplicationContext(), articleTitles, articleScores);
+            articleList.setAdapter(adapter);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }

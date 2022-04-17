@@ -38,8 +38,6 @@ public class HomePage extends AppCompatActivity {
 
     EditText input;
     ImageView enter;
-    ImageView exit;
-    ImageView gone;
     String APIKey = "m_33oiHKum6CiUpAPuwCljTwPFuN4CVL";
 
     private FirebaseFirestore db;
@@ -58,7 +56,7 @@ public class HomePage extends AppCompatActivity {
                 .document(auth.getUid())
                 .collection("stocks");
 
-        listView = findViewById(R.id.articleListView);
+        listView = findViewById(R.id.tickerList);
         input = findViewById(R.id.input);
         enter = findViewById(R.id.add);
         items = new ArrayList<>();
