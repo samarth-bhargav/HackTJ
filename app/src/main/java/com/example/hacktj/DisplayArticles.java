@@ -57,6 +57,7 @@ public class DisplayArticles extends AppCompatActivity implements View.OnClickLi
     private TextView displayArticlesLogo;
     private String APIKey = "6babdbaf841b46a38423ff697cbca978";
     private ListView articleList;
+    private TextView displayArticleScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class DisplayArticles extends AppCompatActivity implements View.OnClickLi
 
         companyName = getIntent().getStringExtra("Token");
         articleList = findViewById(R.id.articleListView);
+        displayArticleScore = findViewById(R.id.displayScore);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -96,6 +98,7 @@ public class DisplayArticles extends AppCompatActivity implements View.OnClickLi
             }
             Log.d("ArticleTitles", articleTitles.toString());
 
+            double total_article_score = 0;
             int negative = 0, positive = 0;
             for (int i = 0; i < articleTitles.size(); i++){
                 for (String str : negativeWords){
@@ -113,7 +116,10 @@ public class DisplayArticles extends AppCompatActivity implements View.OnClickLi
                     score = 0.5;
                 }
                 articleScores.add(score);
+                total_article_score += score;
             }
+            total_article_score /= articleTitles.size();
+            displayArticleScore.setText(("Score: " + total_article_score).substring(0,11));
             for (int i = 0; i < Math.min(5, ar.length()); i++) {
                 if (articleTitles.get(i).length() > 70){
                     String a = articleTitles.get(i);
