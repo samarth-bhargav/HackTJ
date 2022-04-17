@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "466242211909",
+    "project_id": "hacktj-bc98f",
+    "storage_bucket": "hacktj-bc98f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466242211909:android:8fc6e4dd1e4ffab9fc932c",
+        "android_client_info": {
+          "package_name": "com.example.hacktj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466242211909-90rj9tkblm5h42kc1e9vf9i9grrv3pvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4D3F8NvsZhl2ZUuSJkzfUI7V9H08BZcI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466242211909-90rj9tkblm5h42kc1e9vf9i9grrv3pvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
