@@ -24,6 +24,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,6 +45,8 @@ public class HomePage extends AppCompatActivity {
     ImageView enter;
     ImageView exit;
     ImageView gone;
+    String APIKey = "m_33oiHKum6CiUpAPuwCljTwPFuN4CVL";
+
     private FirebaseFirestore db;
     private FirebaseAuth auth;
     private static CollectionReference stocks;
@@ -97,13 +106,32 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String text = input.getText().toString();
-                if (text == null || text.length() == 0) {
-                    makeToast("Enter an item.");
+                JSONObject jsnFile = query(text);
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (jsnFile == null) {
+                    makeToast("Please Enter a Valid Stock");
+                    return;
+                }
+                String valid = null;
+                try {
+                    valid = jsnFile.getString("status");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if (valid.equals("NOT_FOUND") || valid.equals("ERROR")) {
+                    makeToast("Too many Polygon Queries");
+                    return;
                 }
                 else{
                     addItem(text);
                     input.setText("");
                     makeToast("Added: " + text);
+                    return;
                 }
             }
         });
@@ -144,5 +172,49 @@ public class HomePage extends AppCompatActivity {
         if (t != null) t.cancel();
         t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
         t.show();
+    }
+
+    public JSONObject query(final String companyCode) {
+        final JSONObject[] queryResult = new JSONObject[1];
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String inputLine;
+                String result;
+                    try {
+                        String url = "https://api.polygon.io/v1/open-close/"
+                                + companyCode +
+                                "/2020-10-14?adjusted=true&apiKey=" + APIKey;
+                        System.out.println(url);
+                        URL api = new URL(url);
+                        HttpURLConnection connection = (HttpURLConnection) api.openConnection();
+                        connection.connect();
+
+                        InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
+                        BufferedReader reader = new BufferedReader(streamReader);
+                        StringBuilder stringBuilder = new StringBuilder();
+
+                        while ((inputLine = reader.readLine()) != null) {
+                            stringBuilder.append(inputLine);
+                        }
+
+                        reader.close();
+                        streamReader.close();
+
+                        result = stringBuilder.toString();
+
+                        queryResult[0] = new JSONObject(result);
+                    } catch (Exception ex) {
+                        queryResult[0] = null;
+                    }
+                }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (Exception ex) {
+            return null;
+        }
+        return queryResult[0];
     }
 }
