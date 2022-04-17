@@ -1,10 +1,14 @@
 package com.example.hacktj;
 
+import static java.net.Proxy.Type.HTTP;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CandleStickChart;
@@ -17,18 +21,30 @@ import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpResponse;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.auth.UsernamePasswordCredentials;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.auth.BasicScheme;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.client.DefaultHttpClient;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DisplayStockInfo extends AppCompatActivity {
+public class DisplayStockInfo extends AppCompatActivity implements View.OnClickListener{
 
     private AlphaVantage alphaVantage;
     private String companyToken;
     private TextView displayCompanyName;
     private TextView displayCompanyDetails;
+    private TextView logo;
     private CandleStickChart chart;
     private PriceList list;
 
@@ -40,7 +56,11 @@ public class DisplayStockInfo extends AppCompatActivity {
         companyToken = getIntent().getStringExtra("Token");
         displayCompanyName = findViewById(R.id.displayStockCompanyName);
         displayCompanyName.setText(companyToken);
+        displayCompanyName.setOnClickListener(this);
+
         displayCompanyDetails = findViewById(R.id.displayStockCompanyDetails);
+        logo = findViewById(R.id.displayLogo);
+        logo.setOnClickListener(this);
 
         alphaVantage = new AlphaVantage("7RS2YJMXFI2LHA6L");
         JSONObject companyDetails = alphaVantage.query(companyToken);
@@ -113,4 +133,19 @@ public class DisplayStockInfo extends AppCompatActivity {
         chart.notifyDataSetChanged();
         chart.invalidate();
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.displayLogo:
+                startActivity(new Intent(DisplayStockInfo.this, HomePage.class));
+                break;
+            case R.id.displayStockCompanyName:
+                Intent intent = new Intent(DisplayStockInfo.this, DisplayArticles.class);
+                intent.putExtra("Token", companyToken);
+                startActivity(intent);
+                break;
+        }
+    }
+
 }

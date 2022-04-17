@@ -3,14 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/JoshuaYoo/AndroidStudioProjects/HackTJ/app/src/main/res/drawable/remove_item.xml" value="0.298" />
-        <entry key="..\:/Users/JoshuaYoo/AndroidStudioProjects/HackTJ/app/src/main/res/layout/activity_home_page.xml" value="0.24909420289855072" />
         <entry key="..\:/Users/samar/AndroidStudioProjects/HackTJ/app/src/main/res/layout/activity_display_stock_info.xml" value="0.22" />
         <entry key="..\:/Users/samar/AndroidStudioProjects/HackTJ/app/src/main/res/layout/activity_home_page.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/samar/AndroidStudioProjects/HackTJ/app/src/main/res/layout/activity_login_page.xml" value="0.2864583333333333" />
         <entry key="..\:/Users/samar/AndroidStudioProjects/HackTJ/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/samar/AndroidStudioProjects/HackTJ/app/src/main/res/layout/activity_register_page.xml" value="0.213768115942029" />
         <entry key="..\:/Users/samar/AndroidStudioProjects/HackTJ/app/src/main/res/layout/list_row.xml" value="0.1" />
+        <entry key="..\:/Users/samar/Coding/Personal/HackTJ/HackTJ/app/src/main/res/layout/activity_display_articles.xml" value="0.22708333333333333" />
+        <entry key="..\:/Users/samar/Coding/Personal/HackTJ/HackTJ/app/src/main/res/layout/activity_display_stock_info.xml" value="0.22708333333333333" />
+        <entry key="..\:/Users/samar/Coding/Personal/HackTJ/HackTJ/app/src/main/res/layout/activity_home_page.xml" value="0.22708333333333333" />
+        <entry key="..\:/Users/samar/Coding/Personal/HackTJ/HackTJ/app/src/main/res/layout/article_row.xml" value="0.22708333333333333" />
+        <entry key="..\:/Users/samar/Coding/Personal/HackTJ/HackTJ/app/src/main/res/layout/list_row.xml" value="0.22708333333333333" />
       </map>
     </option>
   </component>

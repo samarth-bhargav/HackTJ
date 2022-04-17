@@ -24,19 +24,19 @@
         android:typeface="monospace" />
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/articleListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/homePageLogo"
 
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="60dp" />
 
     <RelativeLayout
         android:id="@+id/stockAdder"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:textAlignment="center"
-        android:layout_below="@id/listview"
+        android:layout_below="@id/articleListView"
         >
 
         <EditText
