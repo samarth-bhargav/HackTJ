@@ -66,7 +66,6 @@ public class HomePage extends AppCompatActivity {
         listView = findViewById(R.id.listview);
         input = findViewById(R.id.input);
         enter = findViewById(R.id.add);
-        exit = findViewById(R.id.minus);
         items = new ArrayList<>();
 
         stocks.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
