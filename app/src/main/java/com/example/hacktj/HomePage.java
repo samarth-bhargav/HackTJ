@@ -140,7 +140,6 @@ public class HomePage extends AppCompatActivity {
 
     public void addItem(String item) {
         item = item.trim();
-        items.add(item);
         String finalItem = item;
         stocks.document(item).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -154,10 +153,11 @@ public class HomePage extends AppCompatActivity {
                     Map<Object, Object> map = new HashMap<>();
                     map.put("Token", finalItem);
                     stocks.document(finalItem).set(map);
+                    items.add(finalItem);
+                    listView.setAdapter(adapter);
                 }
             }
         });
-        listView.setAdapter(adapter);
     }
     public static void removeItem(int index) {
         stocks.document(items.get(index)).delete();
