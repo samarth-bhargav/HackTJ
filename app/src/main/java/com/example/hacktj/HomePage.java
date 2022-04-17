@@ -97,7 +97,7 @@ public class HomePage extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String text = input.getText().toString();
+                String text = input.getText().toString().toUpperCase();
                 JSONObject jsnFile = query(text);
                 try {
                     Thread.sleep(250);
