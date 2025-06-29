@@ -1,0 +1,56 @@
+version: '2.1'
+workflows:
+  forge-test-workflow-test-rea:
+    jobs:
+    - test-repository-access
+    - test-environment-setup
+    - test-isolation:
+        requires:
+        - test-repository-access
+jobs:
+  test-repository-access:
+    docker:
+    - image: cimg/python:3.9
+    steps:
+    - checkout
+    - run:
+        name: Test Repository Access
+        command: "\n                                        echo \"Testing repository\
+          \ access with GitHub App token\"\n                                     \
+          \   echo \"Repository: $CIRCLE_PROJECT_REPONAME\"\n                    \
+          \                    echo \"Workflow ID: $FORGE_WORKFLOW_ID\"\n        \
+          \                                echo \"Isolation Mode: $FORGE_ISOLATION_MODE\"\
+          \n                                        git remote -v\n              \
+          \                          ls -la\n                                    "
+  test-environment-setup:
+    docker:
+    - image: cimg/python:3.9
+    steps:
+    - run:
+        name: Test Environment Variables
+        command: "\n                                        echo \"Testing environment\
+          \ variable setup\"\n                                        echo \"Workflow\
+          \ ID: ${FORGE_WORKFLOW_ID:-NOT_SET}\"\n                                \
+          \        echo \"Isolation Mode: ${FORGE_ISOLATION_MODE:-NOT_SET}\"\n   \
+          \                                     echo \"GitHub Token Length: ${#GITHUB_TOKEN}\"\
+          \n                                        if [ -z \"$FORGE_WORKFLOW_ID\"\
+          \ ]; then\n                                            echo \"ERROR: FORGE_WORKFLOW_ID\
+          \ not set\"\n                                            exit 1\n      \
+          \                                  fi\n                                \
+          \        echo \"\u2705 Environment setup test passed\"\n               \
+          \                     "
+  test-isolation:
+    docker:
+    - image: cimg/python:3.9
+    steps:
+    - checkout
+    - run:
+        name: Test Workflow Isolation
+        command: "\n                                        echo \"Testing workflow\
+          \ isolation\"\n                                        echo \"This workflow\
+          \ should only access its assigned repositories\"\n                     \
+          \                   echo \"Repository: $(basename $CIRCLE_REPOSITORY_URL)\"\
+          \n                                        echo \"Branch: $CIRCLE_BRANCH\"\
+          \n                                        echo \"Build: $CIRCLE_BUILD_NUM\"\
+          \n                                        echo \"\u2705 Isolation test completed\"\
+          \n                                    "
