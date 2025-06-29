@@ -1,6 +1,6 @@
 version: '2.1'
 workflows:
-  forge-test-workflow-802de4d1:
+  forge-test-workflow-test-rea:
     jobs:
     - test-repository-access
     - test-environment-setup
