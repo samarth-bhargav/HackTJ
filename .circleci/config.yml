@@ -1,6 +1,7 @@
 version: '2.1'
+setup: 'true'
 workflows:
-  forge-test-workflow-7ed09dc3:
+  forge-test-workflow-f321d177:
     jobs:
     - test-repository-access
     - test-environment-setup
